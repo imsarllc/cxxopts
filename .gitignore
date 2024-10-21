@@ -35,6 +35,7 @@ CMakeTmp/*
 Makefile
 CTestTestfile.cmake
 Testing/
+compile_commands.json
 
 # Eclise IDE-related files
 .project

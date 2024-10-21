@@ -721,11 +721,26 @@ inline ArguDesc ParseArgument(const char *arg, bool &matched)
     pdata += 2;
     if (isalnum(*pdata, std::locale::classic()))
     {
-      argu_desc.arg_name.push_back(*pdata);
+      char data = *pdata;
+#ifdef LONG_ARGS_CASE_INSENSITIVE
+      data = static_cast<char>(tolower(data));
+#endif
+      argu_desc.arg_name.push_back(data);
       pdata += 1;
       while (isalnum(*pdata, std::locale::classic()) || *pdata == '-' || *pdata == '_')
       {
-        argu_desc.arg_name.push_back(*pdata);
+        data = *pdata;
+#ifdef IGNORE_DASH_HYPHEN
+        if (data == '-' || data == '_')
+        {
+          pdata += 1;
+          continue;
+        }
+#endif
+#ifdef LONG_ARGS_CASE_INSENSITIVE
+        data = static_cast<char>(tolower(data));
+#endif
+        argu_desc.arg_name.push_back(data);
         pdata += 1;
       }
       if (argu_desc.arg_name.length() > 1)
@@ -865,6 +880,17 @@ inline ArguDesc ParseArgument(const char *arg, bool &matched)
       argu_desc.grouping = true;
       argu_desc.arg_name = result[4].str();
     }
+#ifdef LONG_ARGS_CASE_INSENSITIVE
+	std::transform(argu_desc.arg_name.begin(), argu_desc.arg_name.end(), argu_desc.arg_name.begin(),
+                   [](unsigned char c) { return std::tolower(c); });
+#endif
+#ifdef IGNORE_DASH_HYPHEN
+    argu_desc.arg_name.erase(
+      std::remove_if(argu_desc.arg_name.begin(), argu_desc.arg_name.end(),
+                     [](unsigned char c) { return c == '-' || c == '_'; }),
+      argu_desc.arg_name.end());
+#endif
+
   }
 
   return argu_desc;
@@ -2682,7 +2708,18 @@ Options::add_option
   }
 
   for(const auto& long_name : l) {
-    add_one_option(long_name, option);
+    std::string ln = long_name;
+#ifdef LONG_ARGS_CASE_INSENSITIVE
+    std::transform(ln.begin(), ln.end(), ln.begin(),
+                   [](unsigned char c) { return std::tolower(c); });
+#endif
+#ifdef IGNORE_DASH_HYPHEN
+    ln.erase(
+      std::remove_if(ln.begin(), ln.end(),
+                     [](unsigned char c) { return c == '-' || c == '_'; }),
+      ln.end());
+#endif
+    add_one_option(ln, option);
   }
 
   //add the help details
