@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/jarro2783/cxxopts.svg?branch=master)](https://travis-ci.org/jarro2783/cxxopts)
+# IMSAR cxxopts fork
 
 # Release versions
 
-Note that `master` is generally a work in progress, and you probably want to use a
-tagged release version.
+`imsar_master` is the main branch, and it is generally based off a release 
+upstream tag
 
 ## Version 3 breaking changes
 
@@ -42,6 +42,21 @@ where c takes an argument, but a and b do not.
 
 Additionally, anything after `--` will be parsed as a positional argument.
 
+Compiling with `LONG_ARGS_CASE_INSENSITIVE` defined will make
+the following options equivalent:
+
+    --long-arg
+    --Long-Arg
+    --LoNg-ArG
+    
+Compiling with `IGNORE_DASH_HYPHEN` defined will make the following
+options equivalent:
+
+    --long-arg
+    --longarg
+    --l_on-g_ar-g
+    
+    
 ## Basics
 
 ```cpp
