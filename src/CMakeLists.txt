@@ -22,7 +22,7 @@ add_executable(example example.cpp)
 target_link_libraries(example cxxopts)
 target_compile_definitions(example PRIVATE
   LONG_ARGS_CASE_INSENSITIVE
-  IGNORE_DASH_HYPHEN
+  IGNORE_DASH_UNDERSCORE
 )
 
 set_property(TARGET example PROPERTY CXX_STANDARD 17)
