@@ -730,7 +730,7 @@ inline ArguDesc ParseArgument(const char *arg, bool &matched)
       while (isalnum(*pdata, std::locale::classic()) || *pdata == '-' || *pdata == '_')
       {
         data = *pdata;
-#ifdef IGNORE_DASH_HYPHEN
+#ifdef IGNORE_DASH_UNDERSCORE
         if (data == '-' || data == '_')
         {
           pdata += 1;
@@ -884,7 +884,7 @@ inline ArguDesc ParseArgument(const char *arg, bool &matched)
 	std::transform(argu_desc.arg_name.begin(), argu_desc.arg_name.end(), argu_desc.arg_name.begin(),
                    [](unsigned char c) { return std::tolower(c); });
 #endif
-#ifdef IGNORE_DASH_HYPHEN
+#ifdef IGNORE_DASH_UNDERSCORE
     argu_desc.arg_name.erase(
       std::remove_if(argu_desc.arg_name.begin(), argu_desc.arg_name.end(),
                      [](unsigned char c) { return c == '-' || c == '_'; }),
@@ -2713,7 +2713,7 @@ Options::add_option
     std::transform(ln.begin(), ln.end(), ln.begin(),
                    [](unsigned char c) { return std::tolower(c); });
 #endif
-#ifdef IGNORE_DASH_HYPHEN
+#ifdef IGNORE_DASH_UNDERSCORE
     ln.erase(
       std::remove_if(ln.begin(), ln.end(),
                      [](unsigned char c) { return c == '-' || c == '_'; }),

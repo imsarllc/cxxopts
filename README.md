@@ -49,7 +49,7 @@ the following options equivalent:
     --Long-Arg
     --LoNg-ArG
     
-Compiling with `IGNORE_DASH_HYPHEN` defined will make the following
+Compiling with `IGNORE_DASH_UNDERSCORE` defined will make the following
 options equivalent:
 
     --long-arg
