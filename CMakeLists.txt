@@ -19,6 +19,14 @@
 # THE SOFTWARE.
 cmake_minimum_required(VERSION 3.1...3.19)
 
+# The include_guard() in cmake/cxxopts.cmake doesn't seem to be working
+if (TARGET cxxopts)
+  get_target_property(cxxopts_loc cxxopts SOURCE_DIR)
+  message("NOT including cxxopts from ${CMAKE_CURRENT_LIST_DIR}")
+  message("Cxxopts was included from ${cxxopts_loc}")
+  return()
+endif()
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
 include(cxxopts)
 set("PROJECT_DESCRIPTION" "A header-only lightweight C++ command line option parser")
