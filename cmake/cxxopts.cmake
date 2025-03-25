@@ -26,7 +26,7 @@ include(CMakePackageConfigHelpers)
 
 function(cxxopts_getversion version_arg)
     # Parse the current version from the cxxopts header
-    file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/include/cxxopts.hpp" cxxopts_version_defines
+    file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/include/cxxopts/cxxopts.hpp" cxxopts_version_defines
         REGEX "#define CXXOPTS__VERSION_(MAJOR|MINOR|PATCH)")
     foreach(ver ${cxxopts_version_defines})
         if(ver MATCHES "#define CXXOPTS__VERSION_(MAJOR|MINOR|PATCH) +([^ ]+)$")
@@ -127,7 +127,7 @@ function(cxxopts_install_logic)
 
     # Install the header file and export the target
     install(TARGETS cxxopts EXPORT ${targets_export_name} DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    install(FILES ${PROJECT_SOURCE_DIR}/include/cxxopts.hpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    install(FILES ${PROJECT_SOURCE_DIR}/include/cxxopts/cxxopts.hpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 
     set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
